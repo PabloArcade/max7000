@@ -30,6 +30,7 @@
 int run_emit(const char *inp, const char *out, const char *part, const char *pkg, const char *names);
 int run_decode(const char *inp, const char *part, const char *pkg);
 int run_diff(const char *a, const char *b, const char *part, const char *pkg);
+int run_jed2pof(const char *in, const char *out, const char *part, const char *pkg, const char *device);
 void print_devices(void);
 
 static void banner(void) { fprintf(stderr, "%s\n", BANNER); }
@@ -45,6 +46,8 @@ static void usage(void) {
         "                                                         build input + documentation view + REPORT.txt\n"
         "  " PROG_NAME " dump [--part P] [--package PKG] <file>     structural report (decoded fields)\n"
         "  " PROG_NAME " diff [--part P] [--package PKG] <a> <b>    macrocell-level diff of two files of one part\n"
+        "  " PROG_NAME " jed2pof [--part P] [--package PKG] [--device D] <in.jed> <out.pof>\n"
+        "                                                         ATF150x JEDEC -> MAX 7000S / AE POF of the same pins\n"
         "  " PROG_NAME " devices                                    supported parts, packages and notes\n"
         "  " PROG_NAME " --version                                  version line only\n"
         "\n"
@@ -52,6 +55,9 @@ static void usage(void) {
         "named in its \"JEDEC file for:\" header line (--part overrides it). An ATF package comes from the JEDEC\n"
         "pin count, or from --package when the pin count does not decide it (44-pin parts). --part on a .pof\n"
         "must match its device field. A file naming a part this tool does not support is refused by name.\n"
+        "jed2pof writes ATF1502AS / ATF1504AS / ATF1508AS for the 5 V EPM7032S / EPM7064S / EPM7128S; a JEDEC does not\n"
+        "say AS or ASV, so a 3.3 V target needs --part ATF150xASV or --device EPM70xxAE. The part comes from the fuse\n"
+        "count; 44-pin files need --package (PLCC44 or TQFP44).\n"
         "Options may stand anywhere on the line; option names are not case-sensitive; --opt=value also works.\n"
         "\n"
         "Exit codes: 0 done, 3 refused by name (the reason is printed), 2 usage, 1 error.\n");
@@ -147,8 +153,8 @@ static int prefix_nocase(const char *s, const char *p, const char **rest) {
 int main(int argc, char **argv) {
     banner();
     if (argc < 2) { usage(); return 1; }
-    static const char *vopt[3] = { "--part", "--package", "--names" };
-    const char *val[3] = { NULL, NULL, NULL };
+    static const char *vopt[4] = { "--part", "--package", "--names", "--device" };
+    const char *val[4] = { NULL, NULL, NULL, NULL };
     int viewlist = 0, version = 0, np = 0;
     char **pos = xcalloc((size_t)argc + 1, sizeof(char *));
     for (int i = 1; i < argc; i++) {
@@ -156,7 +162,7 @@ int main(int argc, char **argv) {
         int done = 0;
         if (eq_nocase(a, "--viewlist")) { viewlist = 1; continue; }
         if (eq_nocase(a, "--version")) { version = 1; continue; }
-        for (int k = 0; k < 3 && !done; k++) {
+        for (int k = 0; k < 4 && !done; k++) {
             if (eq_nocase(a, vopt[k])) {
                 if (i + 1 >= argc) { fprintf(stderr, PROG_NAME ": option %s needs a value\n", vopt[k]); return 2; }
                 if (!val[k]) val[k] = argv[i + 1];
@@ -176,12 +182,13 @@ int main(int argc, char **argv) {
     int rc;
     const char *cmd = np ? pos[0] : "";
     if (version) rc = 0;                                         /* the banner is the version line */
-    else if (!strcmp(cmd, "devices") && np == 1 && !viewlist && !val[0] && !val[1] && !val[2]) { print_devices(); rc = 0; }
-    else if (!strcmp(cmd, "decode") && viewlist && np == 1 && !val[0] && !val[1] && !val[2]) { print_devices(); rc = 0; }
-    else if (!strcmp(cmd, "decode") && np == 2 && !viewlist && !val[2]) rc = run_decode(pos[1], val[0], val[1]);
-    else if (!strcmp(cmd, "emit") && np == 3 && !viewlist) rc = run_emit(pos[1], pos[2], val[0], val[1], val[2]);
-    else if (!strcmp(cmd, "dump") && np == 2 && !viewlist && !val[2]) rc = run_dump(pos[1], val[0], val[1]);
-    else if (!strcmp(cmd, "diff") && np == 3 && !viewlist && !val[2]) rc = run_diff(pos[1], pos[2], val[0], val[1]);
+    else if (!strcmp(cmd, "devices") && np == 1 && !viewlist && !val[0] && !val[1] && !val[2] && !val[3]) { print_devices(); rc = 0; }
+    else if (!strcmp(cmd, "decode") && viewlist && np == 1 && !val[0] && !val[1] && !val[2] && !val[3]) { print_devices(); rc = 0; }
+    else if (!strcmp(cmd, "decode") && np == 2 && !viewlist && !val[2] && !val[3]) rc = run_decode(pos[1], val[0], val[1]);
+    else if (!strcmp(cmd, "emit") && np == 3 && !viewlist && !val[3]) rc = run_emit(pos[1], pos[2], val[0], val[1], val[2]);
+    else if (!strcmp(cmd, "jed2pof") && np == 3 && !viewlist && !val[2]) rc = run_jed2pof(pos[1], pos[2], val[0], val[1], val[3]);
+    else if (!strcmp(cmd, "dump") && np == 2 && !viewlist && !val[2] && !val[3]) rc = run_dump(pos[1], val[0], val[1]);
+    else if (!strcmp(cmd, "diff") && np == 3 && !viewlist && !val[2] && !val[3]) rc = run_diff(pos[1], pos[2], val[0], val[1]);
     else { usage(); rc = 2; }
     fflush(stdout);
     mem_release_all();

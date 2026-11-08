@@ -8,7 +8,7 @@
 CC      = cc
 CFLAGS  = -std=c99 -Wall -Wextra -O2
 TARGET  = max7000dump
-SRCS    = main.c run.c diff.c devices.c util.c rx.c sha256.c pof.c jedec.c maxdev.c maxdec.c maxnet.c vonet.c maxemit.c maxdoc.c atfdec.c atfemit.c tab_max.c tab_pads.c tab_atf.c tab_devices.c
+SRCS    = main.c run.c diff.c devices.c jed2pof.c util.c rx.c sha256.c pof.c jedec.c maxdev.c maxdec.c maxnet.c vonet.c maxemit.c maxdoc.c atfdec.c atfemit.c tab_max.c tab_pads.c tab_atf.c tab_devices.c tab_forms.c
 OBJS    = $(SRCS:.c=.o)
 HDRS    = util.h rx.h sha256.h pof.h jedec.h max.h atf.h tables.h
 

@@ -134,6 +134,14 @@ static const int epm7032ae_io_use_gnd_clamp_addr[] = {
 static const int epm7032ae_jtag_enable_bst_support_addr[] = {
     15073,
 };
+static const int epm7032ae_io_use_slow_slew_addr[] = {
+    14846, 14853, 14860, 14867, 14874, 14881, 14888, 14895, 14902, 14909, 14916, 14923, 14930, 14937, 14944, 14951,
+    14958, 14965, 14972, 14979, 14986, 14993, 15000, 15007, 15014, 15021, 15028, 15035, 15042, 15049, 15056, 15063,
+};
+static const int epm7032ae_jtag_write_user_code_addr[] = {
+    15074, 15075, 15076, 15077, 15078, 15079, 15080, 15081, 15082, 15083, 15084, 15085, 15086, 15087, 15088, 15089,
+    15090, 15091, 15092, 15093, 15094, 15095, 15096, 15097, 15098, 15099, 15100, 15101, 15102, 15103, 15104, 15105,
+};
 static const struct setting epm7032ae_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 32, 1, -1, 0, epm7032ae_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 32, 1, -1, 0, epm7032ae_mcell_pterm_inv_xor_function_addr},
@@ -156,6 +164,8 @@ static const struct setting epm7032ae_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7032ae_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 32, 1, -1, 0, epm7032ae_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7032ae_jtag_write_user_code_addr},
 };
 static const int epm7032ae_s7set[] = {0};
 static const int epm7032ae_gcc[] = {
@@ -321,6 +331,14 @@ static const int epm7032b_io_set_delay_chain_max7k_addr[] = {
 static const int epm7032b_jtag_enable_bst_support_addr[] = {
     15431,
 };
+static const int epm7032b_io_use_slow_slew_addr[] = {
+    15034, 15046, 15058, 15070, 15082, 15094, 15106, 15118, 15130, 15142, 15154, 15166, 15178, 15190, 15202, 15214,
+    15226, 15238, 15250, 15262, 15274, 15286, 15298, 15310, 15322, 15334, 15346, 15358, 15370, 15382, 15394, 15406,
+};
+static const int epm7032b_jtag_write_user_code_addr[] = {
+    15432, 15433, 15434, 15435, 15436, 15437, 15438, 15439, 15440, 15441, 15442, 15443, 15444, 15445, 15446, 15447,
+    15448, 15449, 15450, 15451, 15452, 15453, 15454, 15455, 15456, 15457, 15458, 15459, 15460, 15461, 15462, 15463,
+};
 static const struct setting epm7032b_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 32, 1, -1, 0, epm7032b_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 32, 1, -1, 0, epm7032b_mcell_pterm_inv_xor_function_addr},
@@ -343,6 +361,8 @@ static const struct setting epm7032b_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 32, 2, -1, 0, epm7032b_io_select_iost_max7k_addr},
     {"IO_SET_DELAY_CHAIN_MAX7K", 32, 1, -1, 0, epm7032b_io_set_delay_chain_max7k_addr},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7032b_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 32, 1, -1, 0, epm7032b_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7032b_jtag_write_user_code_addr},
 };
 static const int epm7032b_s7set[] = {0};
 static const int epm7032b_gcc[] = {
@@ -478,6 +498,13 @@ static const int epm7032s_io_use_open_drain_addr[] = {
 static const int epm7032s_jtag_enable_bst_support_addr[] = {
     15016,
 };
+static const int epm7032s_io_use_slow_slew_addr[] = {
+    14817, 14823, 14829, 14835, 14841, 14847, 14853, 14859, 14865, 14871, 14877, 14883, 14889, 14895, 14901, 14907,
+    14913, 14919, 14925, 14931, 14937, 14943, 14949, 14955, 14961, 14967, 14973, 14979, 14985, 14991, 14997, 15003,
+};
+static const int epm7032s_jtag_write_user_code_addr[] = {
+    15017, 15018, 15019, 15020, 15021, 15022, 15023, 15024, 15025, 15026, 15027, 15028, 15029, 15030, 15031, 15032,
+};
 static const struct setting epm7032s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 32, 1, -1, 0, epm7032s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 32, 1, -1, 0, epm7032s_mcell_pterm_inv_xor_function_addr},
@@ -500,6 +527,8 @@ static const struct setting epm7032s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7032s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 32, 1, -1, 0, epm7032s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7032s_jtag_write_user_code_addr},
 };
 static const int epm7032s_s7set[] = {7,1,0,0,0,0,1,1, 7,1,1,1,1,1,1,1};
 static const int epm7032s_gcc[] = {
@@ -815,6 +844,16 @@ static const int epm7064ae_io_use_gnd_clamp_addr[] = {
 static const int epm7064ae_jtag_enable_bst_support_addr[] = {
     30713,
 };
+static const int epm7064ae_io_use_slow_slew_addr[] = {
+    30262, 30269, 30276, 30283, 30290, 30297, 30304, 30311, 30318, 30325, 30332, 30339, 30346, 30353, 30360, 30367,
+    30374, 30381, 30388, 30395, 30402, 30409, 30416, 30423, 30430, 30437, 30444, 30451, 30458, 30465, 30472, 30479,
+    30486, 30493, 30500, 30507, 30514, 30521, 30528, 30535, 30542, 30549, 30556, 30563, 30570, 30577, 30584, 30591,
+    30598, 30605, 30612, 30619, 30626, 30633, 30640, 30647, 30654, 30661, 30668, 30675, 30682, 30689, 30696, 30703,
+};
+static const int epm7064ae_jtag_write_user_code_addr[] = {
+    30714, 30715, 30716, 30717, 30718, 30719, 30720, 30721, 30722, 30723, 30724, 30725, 30726, 30727, 30728, 30729,
+    30730, 30731, 30732, 30733, 30734, 30735, 30736, 30737, 30738, 30739, 30740, 30741, 30742, 30743, 30744, 30745,
+};
 static const struct setting epm7064ae_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 64, 1, -1, 0, epm7064ae_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 64, 1, -1, 0, epm7064ae_mcell_pterm_inv_xor_function_addr},
@@ -837,6 +876,8 @@ static const struct setting epm7064ae_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7064ae_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 64, 1, -1, 0, epm7064ae_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7064ae_jtag_write_user_code_addr},
 };
 static const int epm7064ae_s7set[] = {0};
 static const int epm7064ae_gcc[] = {
@@ -1186,6 +1227,16 @@ static const int epm7064b_io_set_delay_chain_max7k_addr[] = {
 static const int epm7064b_jtag_enable_bst_support_addr[] = {
     31407,
 };
+static const int epm7064b_io_use_slow_slew_addr[] = {
+    30626, 30638, 30650, 30662, 30674, 30686, 30698, 30710, 30722, 30734, 30746, 30758, 30770, 30782, 30794, 30806,
+    30818, 30830, 30842, 30854, 30866, 30878, 30890, 30902, 30914, 30926, 30938, 30950, 30962, 30974, 30986, 30998,
+    31010, 31022, 31034, 31046, 31058, 31070, 31082, 31094, 31106, 31118, 31130, 31142, 31154, 31166, 31178, 31190,
+    31202, 31214, 31226, 31238, 31250, 31262, 31274, 31286, 31298, 31310, 31322, 31334, 31346, 31358, 31370, 31382,
+};
+static const int epm7064b_jtag_write_user_code_addr[] = {
+    31408, 31409, 31410, 31411, 31412, 31413, 31414, 31415, 31416, 31417, 31418, 31419, 31420, 31421, 31422, 31423,
+    31424, 31425, 31426, 31427, 31428, 31429, 31430, 31431, 31432, 31433, 31434, 31435, 31436, 31437, 31438, 31439,
+};
 static const struct setting epm7064b_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 64, 1, -1, 0, epm7064b_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 64, 1, -1, 0, epm7064b_mcell_pterm_inv_xor_function_addr},
@@ -1208,6 +1259,8 @@ static const struct setting epm7064b_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 64, 2, -1, 0, epm7064b_io_select_iost_max7k_addr},
     {"IO_SET_DELAY_CHAIN_MAX7K", 64, 1, -1, 0, epm7064b_io_set_delay_chain_max7k_addr},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7064b_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 64, 1, -1, 0, epm7064b_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7064b_jtag_write_user_code_addr},
 };
 static const int epm7064b_s7set[] = {0};
 static const int epm7064b_gcc[] = {
@@ -1511,6 +1564,15 @@ static const int epm7064s_io_use_open_drain_addr[] = {
 static const int epm7064s_jtag_enable_bst_support_addr[] = {
     30592,
 };
+static const int epm7064s_io_use_slow_slew_addr[] = {
+    30201, 30207, 30213, 30219, 30225, 30231, 30237, 30243, 30249, 30255, 30261, 30267, 30273, 30279, 30285, 30291,
+    30297, 30303, 30309, 30315, 30321, 30327, 30333, 30339, 30345, 30351, 30357, 30363, 30369, 30375, 30381, 30387,
+    30393, 30399, 30405, 30411, 30417, 30423, 30429, 30435, 30441, 30447, 30453, 30459, 30465, 30471, 30477, 30483,
+    30489, 30495, 30501, 30507, 30513, 30519, 30525, 30531, 30537, 30543, 30549, 30555, 30561, 30567, 30573, 30579,
+};
+static const int epm7064s_jtag_write_user_code_addr[] = {
+    30593, 30594, 30595, 30596, 30597, 30598, 30599, 30600, 30601, 30602, 30603, 30604, 30605, 30606, 30607, 30608,
+};
 static const struct setting epm7064s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 64, 1, -1, 0, epm7064s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 64, 1, -1, 0, epm7064s_mcell_pterm_inv_xor_function_addr},
@@ -1533,6 +1595,8 @@ static const struct setting epm7064s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7064s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 64, 1, -1, 0, epm7064s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7064s_jtag_write_user_code_addr},
 };
 static const int epm7064s_s7set[] = {7,1,1,1,1,1,1,1};
 static const int epm7064s_gcc[] = {
@@ -2432,6 +2496,20 @@ static const int epm7128ae_io_use_gnd_clamp_addr[] = {
 static const int epm7128ae_jtag_enable_bst_support_addr[] = {
     62903,
 };
+static const int epm7128ae_io_use_slow_slew_addr[] = {
+    62228, -1, 62235, 62242, 62249, 62256, -1, 62263, 62270, -1, 62277, 62284, 62291, 62298, -1, 62305,
+    62312, -1, 62319, 62326, 62333, 62340, -1, 62347, 62354, -1, 62361, 62368, 62375, 62382, -1, 62389,
+    62396, -1, 62403, 62410, 62417, 62424, -1, 62431, 62438, -1, 62445, 62452, 62459, 62466, -1, 62473,
+    62480, -1, 62487, 62494, 62501, 62508, -1, 62515, 62522, -1, 62529, 62536, 62543, 62550, -1, 62557,
+    62564, -1, 62571, 62578, 62585, 62592, -1, 62599, 62606, -1, 62613, 62620, 62627, 62634, -1, 62641,
+    62648, -1, 62655, 62662, 62669, 62676, -1, 62683, 62690, -1, 62697, 62704, 62711, 62718, -1, 62725,
+    62732, -1, 62739, 62746, 62753, 62760, -1, 62767, 62774, -1, 62781, 62788, 62795, 62802, -1, 62809,
+    62816, -1, 62823, 62830, 62837, 62844, -1, 62851, 62858, -1, 62865, 62872, 62879, 62886, -1, 62893,
+};
+static const int epm7128ae_jtag_write_user_code_addr[] = {
+    62904, 62905, 62906, 62907, 62908, 62909, 62910, 62911, 62912, 62913, 62914, 62915, 62916, 62917, 62918, 62919,
+    62920, 62921, 62922, 62923, 62924, 62925, 62926, 62927, 62928, 62929, 62930, 62931, 62932, 62933, 62934, 62935,
+};
 static const struct setting epm7128ae_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 128, 1, -1, 0, epm7128ae_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 128, 1, -1, 0, epm7128ae_mcell_pterm_inv_xor_function_addr},
@@ -2454,6 +2532,8 @@ static const struct setting epm7128ae_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7128ae_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 128, 1, -1, 0, epm7128ae_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7128ae_jtag_write_user_code_addr},
 };
 static const int epm7128ae_s7set[] = {0};
 static const int epm7128ae_gcc[] = {
@@ -3411,6 +3491,20 @@ static const int epm7128b_io_set_delay_chain_max7k_addr[] = {
 static const int epm7128b_jtag_enable_bst_support_addr[] = {
     64109,
 };
+static const int epm7128b_io_use_slow_slew_addr[] = {
+    62944, -1, 62956, 62968, 62980, 62992, -1, 63004, 63016, -1, 63028, 63040, 63052, 63064, -1, 63076,
+    63088, -1, 63100, 63112, 63124, 63136, -1, 63148, 63160, -1, 63172, 63184, 63196, 63208, -1, 63220,
+    63232, -1, 63244, 63256, 63268, 63280, -1, 63292, 63304, -1, 63316, 63328, 63340, 63352, -1, 63364,
+    63376, -1, 63388, 63400, 63412, 63424, -1, 63436, 63448, -1, 63460, 63472, 63484, 63496, -1, 63508,
+    63520, -1, 63532, 63544, 63556, 63568, -1, 63580, 63592, -1, 63604, 63616, 63628, 63640, -1, 63652,
+    63664, -1, 63676, 63688, 63700, 63712, -1, 63724, 63736, -1, 63748, 63760, 63772, 63784, -1, 63796,
+    63808, -1, 63820, 63832, 63844, 63856, -1, 63868, 63880, -1, 63892, 63904, 63916, 63928, -1, 63940,
+    63952, -1, 63964, 63976, 63988, 64000, -1, 64012, 64024, -1, 64036, 64048, 64060, 64072, -1, 64084,
+};
+static const int epm7128b_jtag_write_user_code_addr[] = {
+    64110, 64111, 64112, 64113, 64114, 64115, 64116, 64117, 64118, 64119, 64120, 64121, 64122, 64123, 64124, 64125,
+    64126, 64127, 64128, 64129, 64130, 64131, 64132, 64133, 64134, 64135, 64136, 64137, 64138, 64139, 64140, 64141,
+};
 static const struct setting epm7128b_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 128, 1, -1, 0, epm7128b_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 128, 1, -1, 0, epm7128b_mcell_pterm_inv_xor_function_addr},
@@ -3433,6 +3527,8 @@ static const struct setting epm7128b_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 128, 2, -1, 0, epm7128b_io_select_iost_max7k_addr},
     {"IO_SET_DELAY_CHAIN_MAX7K", 128, 1, -1, 0, epm7128b_io_set_delay_chain_max7k_addr},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7128b_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 128, 1, -1, 0, epm7128b_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7128b_jtag_write_user_code_addr},
 };
 static const int epm7128b_s7set[] = {0};
 static const int epm7128b_gcc[] = {
@@ -4312,6 +4408,19 @@ static const int epm7128s_io_use_open_drain_addr[] = {
 static const int epm7128s_jtag_enable_bst_support_addr[] = {
     62686,
 };
+static const int epm7128s_io_use_slow_slew_addr[] = {
+    62103, -1, 62109, 62115, 62121, 62127, -1, 62133, 62139, -1, 62145, 62151, 62157, 62163, -1, 62169,
+    62175, -1, 62181, 62187, 62193, 62199, -1, 62205, 62211, -1, 62217, 62223, 62229, 62235, -1, 62241,
+    62247, -1, 62253, 62259, 62265, 62271, -1, 62277, 62283, -1, 62289, 62295, 62301, 62307, -1, 62313,
+    62319, -1, 62325, 62331, 62337, 62343, -1, 62349, 62355, -1, 62361, 62367, 62373, 62379, -1, 62385,
+    62391, -1, 62397, 62403, 62409, 62415, -1, 62421, 62427, -1, 62433, 62439, 62445, 62451, -1, 62457,
+    62463, -1, 62469, 62475, 62481, 62487, -1, 62493, 62499, -1, 62505, 62511, 62517, 62523, -1, 62529,
+    62535, -1, 62541, 62547, 62553, 62559, -1, 62565, 62571, -1, 62577, 62583, 62589, 62595, -1, 62601,
+    62607, -1, 62613, 62619, 62625, 62631, -1, 62637, 62643, -1, 62649, 62655, 62661, 62667, -1, 62673,
+};
+static const int epm7128s_jtag_write_user_code_addr[] = {
+    62687, 62688, 62689, 62690, 62691, 62692, 62693, 62694, 62695, 62696, 62697, 62698, 62699, 62700, 62701, 62702,
+};
 static const struct setting epm7128s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 128, 1, -1, 0, epm7128s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 128, 1, -1, 0, epm7128s_mcell_pterm_inv_xor_function_addr},
@@ -4334,6 +4443,8 @@ static const struct setting epm7128s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7128s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 128, 1, -1, 0, epm7128s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7128s_jtag_write_user_code_addr},
 };
 static const int epm7128s_s7set[] = {7,1,1,1,1,1,1,1};
 static const int epm7128s_gcc[] = {
@@ -5539,6 +5650,21 @@ static const int epm7160s_io_use_open_drain_addr[] = {
 static const int epm7160s_jtag_enable_bst_support_addr[] = {
     78946,
 };
+static const int epm7160s_io_use_slow_slew_addr[] = {
+    78339, -1, 78345, -1, 78351, 78357, -1, 78363, 78369, -1, 78375, -1, 78381, 78387, -1, 78393,
+    78399, -1, 78405, -1, 78411, 78417, -1, 78423, 78429, -1, 78435, -1, 78441, 78447, -1, 78453,
+    78459, -1, 78465, -1, 78471, 78477, -1, 78483, 78489, -1, 78495, -1, 78501, 78507, -1, 78513,
+    78519, -1, 78525, -1, 78531, 78537, -1, 78543, 78549, -1, 78555, -1, 78561, 78567, -1, 78573,
+    78579, -1, 78585, -1, 78591, 78597, -1, 78603, 78609, -1, 78615, -1, 78621, 78627, -1, 78633,
+    78639, -1, 78645, -1, 78651, 78657, -1, 78663, 78669, -1, 78675, -1, 78681, 78687, -1, 78693,
+    78699, -1, 78705, -1, 78711, 78717, -1, 78723, 78729, -1, 78735, -1, 78741, 78747, -1, 78753,
+    78759, -1, 78765, -1, 78771, 78777, -1, 78783, 78789, -1, 78795, -1, 78801, 78807, -1, 78813,
+    78819, -1, 78825, -1, 78831, 78837, -1, 78843, 78849, -1, 78855, -1, 78861, 78867, -1, 78873,
+    78879, -1, 78885, -1, 78891, 78897, -1, 78903, 78909, -1, 78915, -1, 78921, 78927, -1, 78933,
+};
+static const int epm7160s_jtag_write_user_code_addr[] = {
+    78947, 78948, 78949, 78950, 78951, 78952, 78953, 78954, 78955, 78956, 78957, 78958, 78959, 78960, 78961, 78962,
+};
 static const struct setting epm7160s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 160, 1, -1, 0, epm7160s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 160, 1, -1, 0, epm7160s_mcell_pterm_inv_xor_function_addr},
@@ -5561,6 +5687,8 @@ static const struct setting epm7160s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7160s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 160, 1, -1, 0, epm7160s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7160s_jtag_write_user_code_addr},
 };
 static const int epm7160s_s7set[] = {7,1,1,1,1,1,1,1};
 static const int epm7160s_gcc[] = {
@@ -7205,6 +7333,23 @@ static const int epm7192s_io_use_open_drain_addr[] = {
 static const int epm7192s_jtag_enable_bst_support_addr[] = {
     96028,
 };
+static const int epm7192s_io_use_slow_slew_addr[] = {
+    95301, -1, 95307, -1, 95313, 95319, -1, 95325, 95331, -1, 95337, -1, 95343, 95349, -1, 95355,
+    95361, -1, 95367, -1, 95373, 95379, -1, 95385, 95391, -1, 95397, -1, 95403, 95409, -1, 95415,
+    95421, -1, 95427, -1, 95433, 95439, -1, 95445, 95451, -1, 95457, -1, 95463, 95469, -1, 95475,
+    95481, -1, 95487, -1, 95493, 95499, -1, 95505, 95511, -1, 95517, -1, 95523, 95529, -1, 95535,
+    95541, -1, 95547, -1, 95553, 95559, -1, 95565, 95571, -1, 95577, -1, 95583, 95589, -1, 95595,
+    95601, -1, 95607, -1, 95613, 95619, -1, 95625, 95631, -1, 95637, -1, 95643, 95649, -1, 95655,
+    95661, -1, 95667, -1, 95673, 95679, -1, 95685, 95691, -1, 95697, -1, 95703, 95709, -1, 95715,
+    95721, -1, 95727, -1, 95733, 95739, -1, 95745, 95751, -1, 95757, -1, 95763, 95769, -1, 95775,
+    95781, -1, 95787, -1, 95793, 95799, -1, 95805, 95811, -1, 95817, -1, 95823, 95829, -1, 95835,
+    95841, -1, 95847, -1, 95853, 95859, -1, 95865, 95871, -1, 95877, -1, 95883, 95889, -1, 95895,
+    95901, -1, 95907, -1, 95913, 95919, -1, 95925, 95931, -1, 95937, -1, 95943, 95949, -1, 95955,
+    95961, -1, 95967, -1, 95973, 95979, -1, 95985, 95991, -1, 95997, -1, 96003, 96009, -1, 96015,
+};
+static const int epm7192s_jtag_write_user_code_addr[] = {
+    96029, 96030, 96031, 96032, 96033, 96034, 96035, 96036, 96037, 96038, 96039, 96040, 96041, 96042, 96043, 96044,
+};
 static const struct setting epm7192s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 192, 1, -1, 0, epm7192s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 192, 1, -1, 0, epm7192s_mcell_pterm_inv_xor_function_addr},
@@ -7227,6 +7372,8 @@ static const struct setting epm7192s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7192s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 192, 1, -1, 0, epm7192s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7192s_jtag_write_user_code_addr},
 };
 static const int epm7192s_s7set[] = {7,1,1,1,1,1,1,1};
 static const int epm7192s_gcc[] = {
@@ -9993,6 +10140,28 @@ static const int epm7256ae_io_use_gnd_clamp_addr[] = {
 static const int epm7256ae_jtag_enable_bst_support_addr[] = {
     131897,
 };
+static const int epm7256ae_io_use_slow_slew_addr[] = {
+    130774, -1, 130781, -1, 130788, 130795, -1, 130802, 130809, -1, 130816, -1, 130823, 130830, -1, 130837,
+    130844, -1, 130851, -1, 130858, 130865, -1, 130872, 130879, -1, 130886, -1, 130893, 130900, -1, 130907,
+    130914, -1, 130921, -1, 130928, 130935, -1, 130942, 130949, -1, 130956, -1, 130963, 130970, -1, 130977,
+    130984, -1, 130991, -1, 130998, 131005, -1, 131012, 131019, -1, 131026, -1, 131033, 131040, -1, 131047,
+    131054, -1, 131061, -1, 131068, 131075, -1, 131082, 131089, -1, 131096, -1, 131103, 131110, -1, 131117,
+    131124, -1, 131131, -1, 131138, 131145, -1, 131152, 131159, -1, 131166, -1, 131173, 131180, -1, 131187,
+    131194, -1, 131201, -1, 131208, 131215, -1, 131222, 131229, -1, 131236, -1, 131243, 131250, -1, 131257,
+    131264, -1, 131271, -1, 131278, 131285, -1, 131292, 131299, -1, 131306, -1, 131313, 131320, -1, 131327,
+    131334, -1, 131341, -1, 131348, 131355, -1, 131362, 131369, -1, 131376, -1, 131383, 131390, -1, 131397,
+    131404, -1, 131411, -1, 131418, 131425, -1, 131432, 131439, -1, 131446, -1, 131453, 131460, -1, 131467,
+    131474, -1, 131481, -1, 131488, 131495, -1, 131502, 131509, -1, 131516, -1, 131523, 131530, -1, 131537,
+    131544, -1, 131551, -1, 131558, 131565, -1, 131572, 131579, -1, 131586, -1, 131593, 131600, -1, 131607,
+    131614, -1, 131621, -1, 131628, 131635, -1, 131642, 131649, -1, 131656, -1, 131663, 131670, -1, 131677,
+    131684, -1, 131691, -1, 131698, 131705, -1, 131712, 131719, -1, 131726, -1, 131733, 131740, -1, 131747,
+    131754, -1, 131761, -1, 131768, 131775, -1, 131782, 131789, -1, 131796, -1, 131803, 131810, -1, 131817,
+    131824, -1, 131831, -1, 131838, 131845, -1, 131852, 131859, -1, 131866, -1, 131873, 131880, -1, 131887,
+};
+static const int epm7256ae_jtag_write_user_code_addr[] = {
+    131898, 131899, 131900, 131901, 131902, 131903, 131904, 131905, 131906, 131907, 131908, 131909, 131910, 131911, 131912, 131913,
+    131914, 131915, 131916, 131917, 131918, 131919, 131920, 131921, 131922, 131923, 131924, 131925, 131926, 131927, 131928, 131929,
+};
 static const struct setting epm7256ae_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 256, 1, -1, 0, epm7256ae_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 256, 1, -1, 0, epm7256ae_mcell_pterm_inv_xor_function_addr},
@@ -10015,6 +10184,8 @@ static const struct setting epm7256ae_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7256ae_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 256, 1, -1, 0, epm7256ae_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7256ae_jtag_write_user_code_addr},
 };
 static const int epm7256ae_s7set[] = {0};
 static const int epm7256ae_gcc[] = {
@@ -12887,6 +13058,28 @@ static const int epm7256b_io_set_delay_chain_max7k_addr[] = {
 static const int epm7256b_jtag_enable_bst_support_addr[] = {
     134127,
 };
+static const int epm7256b_io_use_slow_slew_addr[] = {
+    132194, -1, 132206, -1, 132218, 132230, -1, 132242, 132254, -1, 132266, -1, 132278, 132290, -1, 132302,
+    132314, -1, 132326, -1, 132338, 132350, -1, 132362, 132374, -1, 132386, -1, 132398, 132410, -1, 132422,
+    132434, -1, 132446, -1, 132458, 132470, -1, 132482, 132494, -1, 132506, -1, 132518, 132530, -1, 132542,
+    132554, -1, 132566, -1, 132578, 132590, -1, 132602, 132614, -1, 132626, -1, 132638, 132650, -1, 132662,
+    132674, -1, 132686, -1, 132698, 132710, -1, 132722, 132734, -1, 132746, -1, 132758, 132770, -1, 132782,
+    132794, -1, 132806, -1, 132818, 132830, -1, 132842, 132854, -1, 132866, -1, 132878, 132890, -1, 132902,
+    132914, -1, 132926, -1, 132938, 132950, -1, 132962, 132974, -1, 132986, -1, 132998, 133010, -1, 133022,
+    133034, -1, 133046, -1, 133058, 133070, -1, 133082, 133094, -1, 133106, -1, 133118, 133130, -1, 133142,
+    133154, -1, 133166, -1, 133178, 133190, -1, 133202, 133214, -1, 133226, -1, 133238, 133250, -1, 133262,
+    133274, -1, 133286, -1, 133298, 133310, -1, 133322, 133334, -1, 133346, -1, 133358, 133370, -1, 133382,
+    133394, -1, 133406, -1, 133418, 133430, -1, 133442, 133454, -1, 133466, -1, 133478, 133490, -1, 133502,
+    133514, -1, 133526, -1, 133538, 133550, -1, 133562, 133574, -1, 133586, -1, 133598, 133610, -1, 133622,
+    133634, -1, 133646, -1, 133658, 133670, -1, 133682, 133694, -1, 133706, -1, 133718, 133730, -1, 133742,
+    133754, -1, 133766, -1, 133778, 133790, -1, 133802, 133814, -1, 133826, -1, 133838, 133850, -1, 133862,
+    133874, -1, 133886, -1, 133898, 133910, -1, 133922, 133934, -1, 133946, -1, 133958, 133970, -1, 133982,
+    133994, -1, 134006, -1, 134018, 134030, -1, 134042, 134054, -1, 134066, -1, 134078, 134090, -1, 134102,
+};
+static const int epm7256b_jtag_write_user_code_addr[] = {
+    134128, 134129, 134130, 134131, 134132, 134133, 134134, 134135, 134136, 134137, 134138, 134139, 134140, 134141, 134142, 134143,
+    134144, 134145, 134146, 134147, 134148, 134149, 134150, 134151, 134152, 134153, 134154, 134155, 134156, 134157, 134158, 134159,
+};
 static const struct setting epm7256b_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 256, 1, -1, 0, epm7256b_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 256, 1, -1, 0, epm7256b_mcell_pterm_inv_xor_function_addr},
@@ -12909,6 +13102,8 @@ static const struct setting epm7256b_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 256, 2, -1, 0, epm7256b_io_select_iost_max7k_addr},
     {"IO_SET_DELAY_CHAIN_MAX7K", 256, 1, -1, 0, epm7256b_io_set_delay_chain_max7k_addr},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7256b_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 256, 1, -1, 0, epm7256b_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 32, -1, 0, epm7256b_jtag_write_user_code_addr},
 };
 static const int epm7256b_s7set[] = {0};
 static const int epm7256b_gcc[] = {
@@ -15639,6 +15834,27 @@ static const int epm7256s_io_use_open_drain_addr[] = {
 static const int epm7256s_jtag_enable_bst_support_addr[] = {
     131488,
 };
+static const int epm7256s_io_use_slow_slew_addr[] = {
+    130521, -1, 130527, -1, 130533, 130539, -1, 130545, 130551, -1, 130557, -1, 130563, 130569, -1, 130575,
+    130581, -1, 130587, -1, 130593, 130599, -1, 130605, 130611, -1, 130617, -1, 130623, 130629, -1, 130635,
+    130641, -1, 130647, -1, 130653, 130659, -1, 130665, 130671, -1, 130677, -1, 130683, 130689, -1, 130695,
+    130701, -1, 130707, -1, 130713, 130719, -1, 130725, 130731, -1, 130737, -1, 130743, 130749, -1, 130755,
+    130761, -1, 130767, -1, 130773, 130779, -1, 130785, 130791, -1, 130797, -1, 130803, 130809, -1, 130815,
+    130821, -1, 130827, -1, 130833, 130839, -1, 130845, 130851, -1, 130857, -1, 130863, 130869, -1, 130875,
+    130881, -1, 130887, -1, 130893, 130899, -1, 130905, 130911, -1, 130917, -1, 130923, 130929, -1, 130935,
+    130941, -1, 130947, -1, 130953, 130959, -1, 130965, 130971, -1, 130977, -1, 130983, 130989, -1, 130995,
+    131001, -1, 131007, -1, 131013, 131019, -1, 131025, 131031, -1, 131037, -1, 131043, 131049, -1, 131055,
+    131061, -1, 131067, -1, 131073, 131079, -1, 131085, 131091, -1, 131097, -1, 131103, 131109, -1, 131115,
+    131121, -1, 131127, -1, 131133, 131139, -1, 131145, 131151, -1, 131157, -1, 131163, 131169, -1, 131175,
+    131181, -1, 131187, -1, 131193, 131199, -1, 131205, 131211, -1, 131217, -1, 131223, 131229, -1, 131235,
+    131241, -1, 131247, -1, 131253, 131259, -1, 131265, 131271, -1, 131277, -1, 131283, 131289, -1, 131295,
+    131301, -1, 131307, -1, 131313, 131319, -1, 131325, 131331, -1, 131337, -1, 131343, 131349, -1, 131355,
+    131361, -1, 131367, -1, 131373, 131379, -1, 131385, 131391, -1, 131397, -1, 131403, 131409, -1, 131415,
+    131421, -1, 131427, -1, 131433, 131439, -1, 131445, 131451, -1, 131457, -1, 131463, 131469, -1, 131475,
+};
+static const int epm7256s_jtag_write_user_code_addr[] = {
+    131489, 131490, 131491, 131492, 131493, 131494, 131495, 131496, 131497, 131498, 131499, 131500, 131501, 131502, 131503, 131504,
+};
 static const struct setting epm7256s_settings[] = {
     {"MCELL_PTERM_INV_SEXP_FUNCTION", 256, 1, -1, 0, epm7256s_mcell_pterm_inv_sexp_function_addr},
     {"MCELL_PTERM_INV_XOR_FUNCTION", 256, 1, -1, 0, epm7256s_mcell_pterm_inv_xor_function_addr},
@@ -15661,6 +15877,8 @@ static const struct setting epm7256s_settings[] = {
     {"IO_SELECT_IOST_MAX7K", 0, 0, 0, 0, 0},
     {"IO_SET_DELAY_CHAIN_MAX7K", 0, 0, 0, 0, 0},
     {"JTAG_ENABLE_BST_SUPPORT", 1, 1, -1, 0, epm7256s_jtag_enable_bst_support_addr},
+    {"IO_USE_SLOW_SLEW", 256, 1, -1, 0, epm7256s_io_use_slow_slew_addr},
+    {"JTAG_WRITE_USER_CODE", 1, 16, -1, 0, epm7256s_jtag_write_user_code_addr},
 };
 static const int epm7256s_s7set[] = {7,1,1,1,1,1,1,1};
 static const int epm7256s_gcc[] = {
@@ -15674,46 +15892,46 @@ static const int epm7256s_iost[] = {0};
 static const int epm7256s_delay[] = {0};
 const struct maxdev max_devices[] = {
     {"epm7032ae", "max7000ae", 32, 2, 36, 88, 5, 0, 14528, 4, 4, 14816, 5, 4, 6, 72, 15106,
-     epm7032ae_slotsel, 0, epm7032ae_bufsrc, 272, epm7032ae_poesrc, 24, {15072, 15071, 15070}, 3, 0, epm7032ae_settings, 21,
+     epm7032ae_slotsel, 0, epm7032ae_bufsrc, 272, epm7032ae_poesrc, 24, {15072, 15071, 15070}, 3, 0, epm7032ae_settings, 23,
      epm7032ae_s7set, 1, epm7032ae_gcc, 4, epm7032ae_donor, 4, epm7032ae_puh, 2, 0, epm7032ae_iost, 0, epm7032ae_delay, 0, 0},
     {"epm7032b", "max7000b", 32, 2, 36, 88, 5, 0, 14560, 6, 4, 14992, 7, 4, 6, 72, 15464,
-     epm7032b_slotsel, 0, epm7032b_bufsrc, 272, epm7032b_poesrc, 24, {15430, 15429, 15428}, 3, 0, epm7032b_settings, 21,
+     epm7032b_slotsel, 0, epm7032b_bufsrc, 272, epm7032b_poesrc, 24, {15430, 15429, 15428}, 3, 0, epm7032b_settings, 23,
      epm7032b_s7set, 1, epm7032b_gcc, 4, epm7032b_donor, 3, epm7032b_puh, 2, 0, epm7032b_iost, 2, epm7032b_delay, 2, 0},
     {"epm7032s", "max7000s", 32, 2, 36, 88, 5, 0, 14496, 4, 4, 14784, 5, 4, 6, 72, 15033,
-     epm7032s_slotsel, 0, epm7032s_bufsrc, 272, epm7032s_poesrc, 24, {15008, 15007, 15006}, 3, 15009, epm7032s_settings, 21,
+     epm7032s_slotsel, 0, epm7032s_bufsrc, 272, epm7032s_poesrc, 24, {15008, 15007, 15006}, 3, 15009, epm7032s_settings, 23,
      epm7032s_s7set, 2, epm7032s_gcc, 4, epm7032s_donor, 5, epm7032s_puh, 0, -1, epm7032s_iost, 0, epm7032s_delay, 0, 1},
     {"epm7064ae", "max7000ae", 64, 4, 36, 88, 5, 0, 29056, 8, 8, 30208, 9, 8, 6, 144, 30746,
-     epm7064ae_slotsel, 0, epm7064ae_bufsrc, 1056, epm7064ae_poesrc, 48, {30712, 30711, 30710}, 3, 0, epm7064ae_settings, 21,
+     epm7064ae_slotsel, 0, epm7064ae_bufsrc, 1056, epm7064ae_poesrc, 48, {30712, 30711, 30710}, 3, 0, epm7064ae_settings, 23,
      epm7064ae_s7set, 1, epm7064ae_gcc, 4, epm7064ae_donor, 1, epm7064ae_puh, 2, 0, epm7064ae_iost, 0, epm7064ae_delay, 0, 0},
     {"epm7064b", "max7000b", 64, 4, 36, 88, 5, 0, 29120, 10, 8, 30560, 11, 8, 6, 144, 31440,
-     epm7064b_slotsel, 0, epm7064b_bufsrc, 1056, epm7064b_poesrc, 48, {31406, 31405, 31404}, 3, 0, epm7064b_settings, 21,
+     epm7064b_slotsel, 0, epm7064b_bufsrc, 1056, epm7064b_poesrc, 48, {31406, 31405, 31404}, 3, 0, epm7064b_settings, 23,
      epm7064b_s7set, 1, epm7064b_gcc, 4, epm7064b_donor, 2, epm7064b_puh, 2, 0, epm7064b_iost, 2, epm7064b_delay, 2, 1},
     {"epm7064s", "max7000s", 64, 4, 36, 88, 5, 0, 28992, 8, 8, 30144, 9, 8, 6, 144, 30609,
-     epm7064s_slotsel, 0, epm7064s_bufsrc, 1056, epm7064s_poesrc, 48, {30584, 30583, 30582}, 3, 30585, epm7064s_settings, 21,
+     epm7064s_slotsel, 0, epm7064s_bufsrc, 1056, epm7064s_poesrc, 48, {30584, 30583, 30582}, 3, 30585, epm7064s_settings, 23,
      epm7064s_s7set, 1, epm7064s_gcc, 4, epm7064s_donor, 1, epm7064s_puh, 0, -1, epm7064s_iost, 0, epm7064s_delay, 0, 0},
     {"epm7128ae", "max7000ae", 128, 8, 36, 88, 5, 1, 58112, 14, 13, 62144, 14, 13, 6, 288, 62936,
-     epm7128ae_slotsel, 576, epm7128ae_bufsrc, 3648, epm7128ae_poesrc, 78, {62902, 62901, 62900}, 3, 0, epm7128ae_settings, 21,
+     epm7128ae_slotsel, 576, epm7128ae_bufsrc, 3648, epm7128ae_poesrc, 78, {62902, 62901, 62900}, 3, 0, epm7128ae_settings, 23,
      epm7128ae_s7set, 1, epm7128ae_gcc, 4, epm7128ae_donor, 2, epm7128ae_puh, 2, 0, epm7128ae_iost, 0, epm7128ae_delay, 0, 1},
     {"epm7128b", "max7000b", 128, 8, 36, 88, 5, 1, 58240, 16, 13, 62848, 16, 13, 6, 288, 64142,
-     epm7128b_slotsel, 576, epm7128b_bufsrc, 3648, epm7128b_poesrc, 78, {64108, 64107, 64106}, 3, 0, epm7128b_settings, 21,
+     epm7128b_slotsel, 576, epm7128b_bufsrc, 3648, epm7128b_poesrc, 78, {64108, 64107, 64106}, 3, 0, epm7128b_settings, 23,
      epm7128b_s7set, 1, epm7128b_gcc, 4, epm7128b_donor, 2, epm7128b_puh, 2, 0, epm7128b_iost, 2, epm7128b_delay, 2, 1},
     {"epm7128s", "max7000s", 128, 8, 36, 88, 5, 1, 57984, 14, 13, 62016, 14, 13, 6, 288, 62703,
-     epm7128s_slotsel, 576, epm7128s_bufsrc, 3648, epm7128s_poesrc, 78, {62678, 62677, 62676}, 3, 62679, epm7128s_settings, 21,
+     epm7128s_slotsel, 576, epm7128s_bufsrc, 3648, epm7128s_poesrc, 78, {62678, 62677, 62676}, 3, 62679, epm7128s_settings, 23,
      epm7128s_s7set, 1, epm7128s_gcc, 4, epm7128s_donor, 2, epm7128s_puh, 0, -1, epm7128s_iost, 0, epm7128s_delay, 0, 1},
     {"epm7160s", "max7000s", 160, 10, 36, 88, 5, 1, 72480, 16, 15, 78240, 16, 15, 6, 360, 78963,
-     epm7160s_slotsel, 720, epm7160s_bufsrc, 5280, epm7160s_poesrc, 90, {78938, 78937, 78936}, 3, 78939, epm7160s_settings, 21,
+     epm7160s_slotsel, 720, epm7160s_bufsrc, 5280, epm7160s_poesrc, 90, {78938, 78937, 78936}, 3, 78939, epm7160s_settings, 23,
      epm7160s_s7set, 1, epm7160s_gcc, 4, epm7160s_donor, 2, epm7160s_puh, 0, -1, epm7160s_iost, 0, epm7160s_delay, 0, 1},
     {"epm7192s", "max7000s", 192, 12, 36, 88, 5, 1, 86976, 19, 18, 95184, 19, 18, 6, 432, 96045,
-     epm7192s_slotsel, 864, epm7192s_bufsrc, 7584, epm7192s_poesrc, 108, {96020, 96019, 96018}, 3, 96021, epm7192s_settings, 21,
+     epm7192s_slotsel, 864, epm7192s_bufsrc, 7584, epm7192s_poesrc, 108, {96020, 96019, 96018}, 3, 96021, epm7192s_settings, 23,
      epm7192s_s7set, 1, epm7192s_gcc, 4, epm7192s_donor, 2, epm7192s_puh, 0, -1, epm7192s_iost, 0, epm7192s_delay, 0, 1},
     {"epm7256ae", "max7000ae", 256, 16, 36, 88, 5, 1, 116224, 25, 24, 130624, 25, 24, 6, 576, 131930,
-     epm7256ae_slotsel, 1152, epm7256ae_bufsrc, 13440, epm7256ae_poesrc, 144, {131896, 131895, 131894}, 3, 0, epm7256ae_settings, 21,
+     epm7256ae_slotsel, 1152, epm7256ae_bufsrc, 13440, epm7256ae_poesrc, 144, {131896, 131895, 131894}, 3, 0, epm7256ae_settings, 23,
      epm7256ae_s7set, 1, epm7256ae_gcc, 4, epm7256ae_donor, 2, epm7256ae_puh, 2, 0, epm7256ae_iost, 0, epm7256ae_delay, 0, 1},
     {"epm7256b", "max7000b", 256, 16, 36, 88, 5, 1, 116480, 27, 24, 132032, 27, 24, 6, 576, 134160,
-     epm7256b_slotsel, 1152, epm7256b_bufsrc, 13440, epm7256b_poesrc, 144, {134126, 134125, 134124}, 3, 0, epm7256b_settings, 21,
+     epm7256b_slotsel, 1152, epm7256b_bufsrc, 13440, epm7256b_poesrc, 144, {134126, 134125, 134124}, 3, 0, epm7256b_settings, 23,
      epm7256b_s7set, 1, epm7256b_gcc, 4, epm7256b_donor, 2, epm7256b_puh, 2, 0, epm7256b_iost, 2, epm7256b_delay, 2, 1},
     {"epm7256s", "max7000s", 256, 16, 36, 88, 5, 1, 115968, 25, 24, 130368, 25, 24, 6, 576, 131505,
-     epm7256s_slotsel, 1152, epm7256s_bufsrc, 13440, epm7256s_poesrc, 144, {131480, 131479, 131478}, 3, 131481, epm7256s_settings, 21,
+     epm7256s_slotsel, 1152, epm7256s_bufsrc, 13440, epm7256s_poesrc, 144, {131480, 131479, 131478}, 3, 131481, epm7256s_settings, 23,
      epm7256s_s7set, 1, epm7256s_gcc, 4, epm7256s_donor, 2, epm7256s_puh, 0, -1, epm7256s_iost, 0, epm7256s_delay, 0, 1},
 };
 const int n_max_devices = 14;

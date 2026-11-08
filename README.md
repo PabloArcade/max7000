@@ -1,4 +1,4 @@
-# max7000dump v3.25 -- source
+# max7000dump v3.26 -- source
 
 MAX 7000S / AE / B (.pof) and ATF1502AS / ATF1504AS / ATF1508AS (.jed) fuse map decompiler by Darksoft.
 Reads one fuse file and writes a design that the vendor tool compiles back into a part that behaves the same.
@@ -7,7 +7,7 @@ Built for arcade PCB preservation. Use at your own risk.
 ## Commands
 
 ```
-max7000dump v3.25 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
+max7000dump v3.26 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
 
 Commands:
   max7000dump decode --viewlist                          list supported parts + packages
@@ -16,6 +16,8 @@ Commands:
                                                          build input + documentation view + REPORT.txt
   max7000dump dump [--part P] [--package PKG] <file>     structural report (decoded fields)
   max7000dump diff [--part P] [--package PKG] <a> <b>    macrocell-level diff of two files of one part
+  max7000dump jed2pof [--part P] [--package PKG] [--device D] <in.jed> <out.pof>
+                                                         ATF150x JEDEC -> MAX 7000S / AE POF of the same pins
   max7000dump devices                                    supported parts, packages and notes
   max7000dump --version                                  version line only
 
@@ -23,6 +25,9 @@ Device selection: a .pof is decoded for the device named in its own device field
 named in its "JEDEC file for:" header line (--part overrides it). An ATF package comes from the JEDEC
 pin count, or from --package when the pin count does not decide it (44-pin parts). --part on a .pof
 must match its device field. A file naming a part this tool does not support is refused by name.
+jed2pof writes ATF1502AS / ATF1504AS / ATF1508AS for the 5 V EPM7032S / EPM7064S / EPM7128S; a JEDEC does not
+say AS or ASV, so a 3.3 V target needs --part ATF150xASV or --device EPM70xxAE. The part comes from the fuse
+count; 44-pin files need --package (PLCC44 or TQFP44).
 Options may stand anywhere on the line; option names are not case-sensitive; --opt=value also works.
 
 Exit codes: 0 done, 3 refused by name (the reason is printed), 2 usage, 1 error.
@@ -38,6 +43,8 @@ max7000dump emit chip.jed out --package PLCC44 --names original.pld      pin nam
 max7000dump dump chip.pof                                    decoded fields + decoded netlist
 max7000dump diff old.jed new.jed --package PLCC44            what changed, by macrocell and field
 max7000dump devices                                          supported parts and packages (also: decode --viewlist)
+max7000dump jed2pof chip.jed chip.pof --package PLCC44       ATF1502AS .jed -> EPM7032S .pof (5 V)
+max7000dump jed2pof chip.jed chip.pof --part ATF1504ASV --package TQFP44      3.3 V: -> EPM7064AE
 max7000dump --version
 ```
 
@@ -53,7 +60,7 @@ max7000dump --version
   refused (PARTS_DIFFER).
 - **devices** lists the supported parts and packages and the parts that are not supported.
 
-The banner `max7000 decoder tool by Darksoft v3.25. Use at your own risk.` goes to standard error, first, on every run.
+The banner `max7000 decoder tool by Darksoft v3.26. Use at your own risk.` goes to standard error, first, on every run.
 Exit codes: 0 done, 3 refused by name, 2 usage, 1 error (and no arguments at all).
 
 ## Supported parts and packages (51; each decoded, re-compiled by the vendor tool and checked)
@@ -77,6 +84,74 @@ Exit codes: 0 done, 3 refused by name, 2 usage, 1 error (and no arguments at all
     EPM7256S   PQFP208, RQFP208
 
 Not supported: original (non-S) MAX 7000 and EPM7096 (no vendor tool in hand compiles them), EPM7512AE / EPM7512B.
+
+## jed2pof
+
+jed2pof -- ATF150x JEDEC to MAX 7000 POF
+
+    max7000dump jed2pof chip.jed chip.pof --package PLCC44
+
+Reads the .jed of an ATF1502AS, ATF1504AS or ATF1508AS and writes a .pof for the MAX part with the same pins:
+ATF1502AS -> EPM7032S, ATF1504AS -> EPM7064S, ATF1508AS -> EPM7128S (5 V parts), in the same package. The MAX part
+programmed with that .pof behaves as the ATF part programmed with the .jed: the same outputs, enables and register
+states for every input sequence from power-up. No other program is needed.
+
+Target voltage. A JEDEC file does not say whether it is for the 5 V part (ATF150xAS) or the 3.3 V part (ATF150xASV);
+the same file programs both. By default jed2pof writes for the 5 V MAX part. For a 3.3 V board give --part ATF1502ASV
+(or ATF1504ASV / ATF1508ASV) or --device EPM7032AE (EPM7064AE / EPM7128AE). 44-pin files also need --package PLCC44
+or --package TQFP44, because the two packages number their pins differently. A part / package pair with no MAX part
+(for example ATF1504AS PLCC68 or PQFP100) is refused (NO_TARGET_PACKAGE).
+
+Power-up. The ATF150x registers start low after power-up (Atmel ATF1502AS and ATF1508AS datasheets); the MAX 7000S
+registers start low too, and on the AE parts jed2pof sets every register to start low. For the ATF1504AS no datasheet
+revision found states the value for that part itself; its files are converted on the strength of the family statement.
+
+Pin keeper. The ATF150x parts can hold an undriven pin at its last level (pin keeper). The MAX 7000S and 7000AE parts
+have no such circuit, so the keeper setting is dropped. An input pin left floating on the board may therefore behave
+differently on the MAX part: tie unused or floating inputs to a fixed level. jed2pof prints "DROPPED PIN_KEEPER" for
+every file whose keeper is on (93 of the 95 fitter and board files tested).
+
+What is written. jed2pof writes a .pof only when every feature the file uses is one of the forms checked on the test
+designs, and only after its own MAX decoder has read the new .pof back. Anything else is refused by name (exit code 3)
+and no file is written. Refused features, with the number of the 194 test files refused for each:
+
+    PAD_ENABLE_UNDETERMINED       66
+    OUTPUT_FEEDBACK_SPLIT         12
+    GOE_PT_SOURCE_NOT_MODELLED    10
+    CASCADE_DONOR_FORM             9
+    PAD_NOT_BONDED                 6
+    NO_TARGET_PACKAGE              5
+    POWER_DOWN_PIN                 4
+    GLOBAL_CLEAR_POLARITY          2
+    PIA_UNROUTABLE                 2
+    FAST_INPUT_NOT_MODELLED        1
+
+Also refused by name, not met in the test files: latches whose value reaches a pin (LATCH_NO_MAX_COUNTERPART),
+output enables computed by a product term (PT_OE_NO_MAX_COUNTERPART), a third global clock or an inverted second one
+(GLOBAL_CLOCK_FORM), and any form not in the checked set (FORM_NOT_PROVEN). No 3.3 V ATF1504 test design was
+converted, so every EPM7064AE conversion is refused (FORM_NOT_PROVEN).
+
+How it was checked. 194 test JEDECs: 105 written by the Atmel fitter, 87 written by Atmel's POF2JED from Quartus .pof
+files, and the two Batman Forever U42 files. 117 were refused by name. The other 77 were converted, and for each one a
+formal equivalence check between the decoded .jed and the decoded .pof, from power-up with every register low, found
+them equal on every pin. By target part:
+
+    target     equivalent   equivalent, timing     relies on the family
+                                        hazard                statement
+    EPM7032S           38                    5                        0
+    EPM7064S            7                    1                       15
+    EPM7128S            1                    8                        0
+    EPM7032AE           1                    0                        0
+    EPM7064AE           0                    0                        0
+    EPM7128AE           1                    0                        0
+
+"equivalent, timing hazard" = a register whose clock and data come from the same input, so its behaviour when both
+change together depends on the chip's timing, on the ATF part as on the MAX part. "relies on the family statement" =
+ATF1504AS files whose equality depends on the power-up value (see Power-up). The C program was compared byte for byte
+with the checked reference on all 194 files and on 20000 corrupted files, on Linux and on Windows.
+Not yet run: reading the produced .pof files back with Quartus (quartus_cpf) and with POF2JED (154 conversions); until
+then that is not part of the claim.
+
 
 ## Known limits
 
