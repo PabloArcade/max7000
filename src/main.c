@@ -31,6 +31,7 @@ int run_emit(const char *inp, const char *out, const char *part, const char *pkg
 int run_decode(const char *inp, const char *part, const char *pkg);
 int run_diff(const char *a, const char *b, const char *part, const char *pkg);
 int run_jed2pof(const char *in, const char *out, const char *part, const char *pkg, const char *device);
+int run_pof2jed(const char *in, const char *out, const char *part);
 void print_devices(void);
 
 static void banner(void) { fprintf(stderr, "%s\n", BANNER); }
@@ -48,6 +49,8 @@ static void usage(void) {
         "  " PROG_NAME " diff [--part P] [--package PKG] <a> <b>    macrocell-level diff of two files of one part\n"
         "  " PROG_NAME " jed2pof [--part P] [--package PKG] [--device D] <in.jed> <out.pof>\n"
         "                                                         ATF150x JEDEC -> MAX 7000S / AE POF of the same pins\n"
+        "  " PROG_NAME " pof2jed [--part P] <in.pof> <out.jed>\n"
+        "                                                         MAX 7000S / AE POF -> ATF150x JEDEC of the same pins\n"
         "  " PROG_NAME " devices                                    supported parts, packages and notes\n"
         "  " PROG_NAME " --version                                  version line only\n"
         "\n"
@@ -58,6 +61,8 @@ static void usage(void) {
         "jed2pof writes ATF1502AS / ATF1504AS / ATF1508AS for the 5 V EPM7032S / EPM7064S / EPM7128S; a JEDEC does not\n"
         "say AS or ASV, so a 3.3 V target needs --part ATF150xASV or --device EPM70xxAE. The part comes from the fuse\n"
         "count; 44-pin files need --package (PLCC44 or TQFP44).\n"
+        "pof2jed writes the ATF1502 / ATF1504 / ATF1508 of the same pins for an EPM7032 / EPM7064 / EPM7128 S or AE; the\n"
+        "AS part (5 V) for an S device, the ASV part (3.3 V) for an AE device; --part ATF150xAS or ATF150xASV chooses.\n"
         "Options may stand anywhere on the line; option names are not case-sensitive; --opt=value also works.\n"
         "\n"
         "Exit codes: 0 done, 3 refused by name (the reason is printed), 2 usage, 1 error.\n");
@@ -187,6 +192,7 @@ int main(int argc, char **argv) {
     else if (!strcmp(cmd, "decode") && np == 2 && !viewlist && !val[2] && !val[3]) rc = run_decode(pos[1], val[0], val[1]);
     else if (!strcmp(cmd, "emit") && np == 3 && !viewlist && !val[3]) rc = run_emit(pos[1], pos[2], val[0], val[1], val[2]);
     else if (!strcmp(cmd, "jed2pof") && np == 3 && !viewlist && !val[2]) rc = run_jed2pof(pos[1], pos[2], val[0], val[1], val[3]);
+    else if (!strcmp(cmd, "pof2jed") && np == 3 && !viewlist && !val[1] && !val[2] && !val[3]) rc = run_pof2jed(pos[1], pos[2], val[0]);
     else if (!strcmp(cmd, "dump") && np == 2 && !viewlist && !val[2] && !val[3]) rc = run_dump(pos[1], val[0], val[1]);
     else if (!strcmp(cmd, "diff") && np == 3 && !viewlist && !val[2] && !val[3]) rc = run_diff(pos[1], pos[2], val[0], val[1]);
     else { usage(); rc = 2; }

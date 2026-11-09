@@ -1,4 +1,4 @@
-# max7000dump v3.26 -- source
+# max7000dump v3.27 -- source
 
 MAX 7000S / AE / B (.pof) and ATF1502AS / ATF1504AS / ATF1508AS (.jed) fuse map decompiler by Darksoft.
 Reads one fuse file and writes a design that the vendor tool compiles back into a part that behaves the same.
@@ -7,7 +7,7 @@ Built for arcade PCB preservation. Use at your own risk.
 ## Commands
 
 ```
-max7000dump v3.26 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
+max7000dump v3.27 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
 
 Commands:
   max7000dump decode --viewlist                          list supported parts + packages
@@ -18,6 +18,8 @@ Commands:
   max7000dump diff [--part P] [--package PKG] <a> <b>    macrocell-level diff of two files of one part
   max7000dump jed2pof [--part P] [--package PKG] [--device D] <in.jed> <out.pof>
                                                          ATF150x JEDEC -> MAX 7000S / AE POF of the same pins
+  max7000dump pof2jed [--part P] <in.pof> <out.jed>
+                                                         MAX 7000S / AE POF -> ATF150x JEDEC of the same pins
   max7000dump devices                                    supported parts, packages and notes
   max7000dump --version                                  version line only
 
@@ -28,6 +30,8 @@ must match its device field. A file naming a part this tool does not support is 
 jed2pof writes ATF1502AS / ATF1504AS / ATF1508AS for the 5 V EPM7032S / EPM7064S / EPM7128S; a JEDEC does not
 say AS or ASV, so a 3.3 V target needs --part ATF150xASV or --device EPM70xxAE. The part comes from the fuse
 count; 44-pin files need --package (PLCC44 or TQFP44).
+pof2jed writes the ATF1502 / ATF1504 / ATF1508 of the same pins for an EPM7032 / EPM7064 / EPM7128 S or AE; the
+AS part (5 V) for an S device, the ASV part (3.3 V) for an AE device; --part ATF150xAS or ATF150xASV chooses.
 Options may stand anywhere on the line; option names are not case-sensitive; --opt=value also works.
 
 Exit codes: 0 done, 3 refused by name (the reason is printed), 2 usage, 1 error.
@@ -45,6 +49,7 @@ max7000dump diff old.jed new.jed --package PLCC44            what changed, by ma
 max7000dump devices                                          supported parts and packages (also: decode --viewlist)
 max7000dump jed2pof chip.jed chip.pof --package PLCC44       ATF1502AS .jed -> EPM7032S .pof (5 V)
 max7000dump jed2pof chip.jed chip.pof --part ATF1504ASV --package TQFP44      3.3 V: -> EPM7064AE
+max7000dump pof2jed chip.pof chip.jed                        EPM7032S .pof -> ATF1502AS .jed (EPM7032AE -> ATF1502ASV)
 max7000dump --version
 ```
 
@@ -60,7 +65,7 @@ max7000dump --version
   refused (PARTS_DIFFER).
 - **devices** lists the supported parts and packages and the parts that are not supported.
 
-The banner `max7000 decoder tool by Darksoft v3.26. Use at your own risk.` goes to standard error, first, on every run.
+The banner `max7000 decoder tool by Darksoft v3.27. Use at your own risk.` goes to standard error, first, on every run.
 Exit codes: 0 done, 3 refused by name, 2 usage, 1 error (and no arguments at all).
 
 ## Supported parts and packages (51; each decoded, re-compiled by the vendor tool and checked)
@@ -151,6 +156,88 @@ ATF1504AS files whose equality depends on the power-up value (see Power-up). The
 with the checked reference on all 194 files and on 20000 corrupted files, on Linux and on Windows.
 Not yet run: reading the produced .pof files back with Quartus (quartus_cpf) and with POF2JED (154 conversions); until
 then that is not part of the claim.
+
+
+## pof2jed
+
+pof2jed -- MAX 7000 POF to ATF150x JEDEC
+
+    max7000dump pof2jed chip.pof chip.jed
+
+Reads the .pof of an EPM7032S, EPM7064S or EPM7128S (5 V) or an EPM7032AE, EPM7064AE or EPM7128AE (3.3 V) and writes
+the .jed for the Atmel / Microchip part with the same pins, in the same package: EPM7032 -> ATF1502, EPM7064 ->
+ATF1504, EPM7128 -> ATF1508; an S part gives the 5 V ATF150xAS, an AE part the 3.3 V ATF150xASV. The ATF part
+programmed with that .jed behaves as the MAX part programmed with the .pof: the same outputs, enables and register
+states for every input sequence from power-up. The .jed is laid out as the Atmel fitter writes it. No other program is
+needed. Every other MAX part (EPM7160S and up, all 7000B parts) is refused (NO_ATF_TARGET), as is a package with no ATF
+part of the same pins, such as FBGA100 or TQFP144 (NO_ATF_TARGET_PACKAGE).
+
+Target voltage. The same .jed programs the AS and the ASV part; the first line pof2jed prints names the part it wrote
+for. --part ATF150xAS or --part ATF150xASV chooses the other voltage of the same density; the file is then written only
+if every feature it uses was checked for that exact part, otherwise it is refused (FORM_NOT_PROVEN).
+
+What has no ATF counterpart.
+  - Registers of an AE part set to start high at power-up: refused (REGISTER_POWERS_UP_HIGH). The ATF150x registers
+    start low and the ATF has no inverter after the register. 153 of the 188 AE test files use them.
+  - Ground pins of an AE part (unused pins tied low): written as ATF outputs driving 0. If the macrocell behind such a
+    pin also carries logic the file is refused (GND_CLAMP_MACROCELL_USED).
+  - Unused pins of an S part: Quartus writes an unused logic cell (a register that never clocks and whose clear is
+    always on) and enables the pin's output. pof2jed writes the ATF pin driving 0, which is what that cell does when read
+    from the image, and prints for every such pin
+        pin <n> drives 0: level read from the image, not stated by the vendor
+    because no Altera document states the level such a pin has on the board.
+  - User code bits 17 to 32 of an AE part, and bit 16 on the EPM7128: the ATF part has no fuse for them; dropped, and
+    named when not 1. The turbo bit becomes the ATF low-power setting. The ATF pin keeper is written off (the MAX parts
+    have none).
+
+What is written. pof2jed writes a .jed only when every feature the file uses is one of the forms checked on the test
+designs, and only after its own ATF decoder has read the new .jed back. Anything else is refused by name (exit code 3)
+and no file is written. Refused, with the number of the 478 test files refused for each:
+
+    REGISTER_POWERS_UP_HIGH          153
+    PT_OE_CONFLICT                    21
+    PEXP_DONOR_MODE_UNWITNESSED       15
+    NO_ATF_TARGET_PACKAGE             10
+    GND_CLAMP_MACROCELL_USED           7
+    GLOBAL_CLOCK_CONFIG_UNWITNESSED    4
+    PEXP_ACROSS_LAB                    3
+    JTAG_PIN_CONFLICT                  1
+    OR_OUTPUT_INVERT_UNWITNESSED       1
+    S_GLOBAL_UNWITNESSED               1
+
+PT_OE_CONFLICT: a pin enable driven by a logic cell needs the pin's own enable term, which the file already uses.
+Also refused by name, not met in the test files: UIM_UNROUTABLE, DONOR_FORM, DONOR_SEXP_FORM, DONOR_AT_BLOCK_EDGE,
+PART_PAIR_MISMATCH (a --part of another density), and any form not in the checked set (FORM_NOT_PROVEN).
+
+How it was checked. 478 test .pof files written by Quartus II 13.0sp1 for these six parts. 216 were refused by name.
+The other 262 were converted, and for each one a formal equivalence check between the decoded .pof and the decoded .jed,
+from power-up, found them equal on every pin it compared; no file was found different. By target part:
+
+    target       equal     timing   family   unused  refused
+                           hazard statement     pins         
+    ATF1502AS       50         14        0       25       10   (from EPM7032S, 99 files)
+    ATF1504AS        0          3       13       40       18   (from EPM7064S, 74 files)
+    ATF1508AS       36          9        0       63        9   (from EPM7128S, 117 files)
+    ATF1502ASV       4          0        0        0       62   (from EPM7032AE, 66 files)
+    ATF1504ASV       0          0        3        0       53   (from EPM7064AE, 56 files)
+    ATF1508ASV       2          0        0        0       64   (from EPM7128AE, 66 files)
+
+"equal" = equal on every pin. "timing hazard" = a register whose clock and data come from the same input, so its
+behaviour when both change together depends on the chip's timing, on either part. "family statement" = ATF1504AS files
+whose equality depends on the power-up value: no datasheet revision found states it for that part itself, only for its
+family. "unused pins" = equal on every pin except the S-part unused pins above, whose level rests on reading the image;
+the report names them. The C program was compared byte for byte with the checked reference on all 478 files and on
+20000 corrupted files, on Linux and on Windows. Converting back with jed2pof gives a .pof equal to the original
+wherever jed2pof writes (163 files).
+
+Atmel's POF2JED. POF2JED 4.45.1 was run on the same files. On a pin whose behaviour the vendor states, its .jed did
+not behave as the .pof in these files:
+    EPM7032S 4, EPM7064S 6, EPM7128S 0, EPM7032AE 39, EPM7064AE 27, EPM7128AE 7
+Among the differences: AE registers that start high (POF2JED drops the setting; pof2jed refuses such files), AE ground
+pins that POF2JED leaves undriven, and pin values that differ from power-up. In further files the only difference is
+on the S-part unused pins above, which POF2JED leaves undriven:
+    EPM7032S 25, EPM7064S 27, EPM7128S 24
+What level the MAX part puts on those pins is not stated by any vendor file, so these are not counted as POF2JED errors.
 
 
 ## Known limits

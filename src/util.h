@@ -13,7 +13,7 @@
 #include <stdio.h>
 
 #define TOOL_NAME "max7000"
-#define TOOL_VERSION "v3.26"
+#define TOOL_VERSION "v3.27"
 #define TOOL_VER TOOL_NAME " " TOOL_VERSION          /* written into every emitted file */
 #define PROG_NAME "max7000dump"                      /* the program name the usage screen prints */
 #define BANNER "max7000 decoder tool by Darksoft " TOOL_VERSION ". Use at your own risk."
