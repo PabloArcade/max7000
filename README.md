@@ -1,4 +1,4 @@
-# max7000dump v3.27 -- source
+# max7000dump v3.28 -- source
 
 MAX 7000S / AE / B (.pof) and ATF1502AS / ATF1504AS / ATF1508AS (.jed) fuse map decompiler by Darksoft.
 Reads one fuse file and writes a design that the vendor tool compiles back into a part that behaves the same.
@@ -7,7 +7,7 @@ Built for arcade PCB preservation. Use at your own risk.
 ## Commands
 
 ```
-max7000dump v3.27 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
+max7000dump v3.28 -- MAX 7000S / AE / B and ATF1502AS / ATF1504AS / ATF1508AS fuse map decompiler by Darksoft
 
 Commands:
   max7000dump decode --viewlist                          list supported parts + packages
@@ -65,7 +65,7 @@ max7000dump --version
   refused (PARTS_DIFFER).
 - **devices** lists the supported parts and packages and the parts that are not supported.
 
-The banner `max7000 decoder tool by Darksoft v3.27. Use at your own risk.` goes to standard error, first, on every run.
+The banner `max7000 decoder tool by Darksoft v3.28. Use at your own risk.` goes to standard error, first, on every run.
 Exit codes: 0 done, 3 refused by name, 2 usage, 1 error (and no arguments at all).
 
 ## Supported parts and packages (51; each decoded, re-compiled by the vendor tool and checked)
@@ -154,8 +154,24 @@ them equal on every pin. By target part:
 change together depends on the chip's timing, on the ATF part as on the MAX part. "relies on the family statement" =
 ATF1504AS files whose equality depends on the power-up value (see Power-up). The C program was compared byte for byte
 with the checked reference on all 194 files and on 20000 corrupted files, on Linux and on Windows.
-Not yet run: reading the produced .pof files back with Quartus (quartus_cpf) and with POF2JED (154 conversions); until
-then that is not part of the claim.
+Read back by the vendor tools. Quartus II 13.0sp1 (quartus_cpf) opened each of the 77 converted .pof files and
+converted it to .jam and .svf with no error and no warning: 77 of 77. Atmel's POF2JED 4.45.1 converted each one
+back to an ATF .jed, and that .jed was compared formally with the original input .jed on every pin, from power-up.
+By target part:
+
+    target      files equivalent   equivalent, timing   not decided  different
+                                               hazard                         
+    EPM7032S       43         38                    5             0          0
+    EPM7064S       23         22                    1             0          0
+    EPM7128S        9          1                    6             2          0
+    EPM7032AE       1          1                    0             0          0
+    EPM7128AE       1          0                    0             1          0
+
+None came back different. In the 3 files counted as "not decided", POF2JED's .jed connects a pad to logic lines
+that nothing reads: an unconnected pad of the 84-pin PLCC package (2 files; POF2JED itself reports that its
+conversion may not be correct) or the JTAG TDI pin (1 file). The decoder in this tool refuses such a file; with that
+pad left free to take any value, all three are equal to the original as well (the two PLCC files with the timing
+hazard described above).
 
 
 ## pof2jed
